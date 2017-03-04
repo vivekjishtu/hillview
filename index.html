@@ -64,6 +64,11 @@
     </div>
 	<pre id="data"></pre>
 
+	<pre id="dataGeo"></pre>
+	<pre id="dataAcceleration"></pre>
+	<pre id="dataAG"></pre>
+	<pre id="dataRR"></pre>
+	<pre id="dataRI"></pre>
 
     <img>
     <canvas class="hidden"></canvas>
@@ -75,8 +80,9 @@
 
 var data = document.querySelector('#data');
 
-function log(message) {
-  data.innerHTML += message + '<br />' + data.innerHTML;
+function log(message, gId) {
+  if(!gId) data.innerHTML += message + '<br />' + data.innerHTML;
+  else document.getElementById(gId).innerHTML = message;
 }
 
 navigator.geolocation.watchPosition(logPosition);
@@ -84,7 +90,7 @@ navigator.geolocation.watchPosition(logPosition);
 function logPosition(position) {
   console.log(position);
   log('latitude: ' + position.coords.latitude +
-    ', longitude: ' + position.coords.longitude);
+    ', longitude: ' + position.coords.longitude, "dataGeo");
 }
 
 
@@ -92,19 +98,19 @@ function handleDeviceMotion(e) {
   var x = e.acceleration.x;
   var y = e.acceleration.y;
   var z = e.acceleration.z;
-  log('Acceleration: ' + x + ', ' + y + ', ' + z);
+  log('Acceleration: ' + x + ', ' + y + ', ' + z, "dataAcceleration");
 
   var xg = e.accelerationIncludingGravity.x;
   var yg = e.accelerationIncludingGravity.y;
   var zg = e.accelerationIncludingGravity.z;
-  log('Acceleration including gravity: ' + xg + ', ' + yg + ', ' + zg);
+  log('Acceleration including gravity: ' + xg + ', ' + yg + ', ' + zg, "dataAG");
 
   var alpha = e.rotationRate.alpha;
   var beta = e.rotationRate.beta;
   var gamma = e.rotationRate.gamma;
-  log('Rotation rate: ' + alpha + ', ' + beta + ', ' + gamma);
+  log('Rotation rate: ' + alpha + ', ' + beta + ', ' + gamma, "dataRR");
 
-  log('Refresh interval: ' + e.interval);
+  log('Refresh interval: ' + e.interval, "dataRI");
 }
 
 if (window.DeviceMotionEvent) {
