@@ -21,11 +21,19 @@
 		position: relative;
 	}
 
+	body, select, input, button  {
+		font: menu;
+	}
+
 	section {
 		z-index: 100;
 		    position: absolute;
 
 	}
+
+	.hide {
+		display: none;
+	} 
 	</style>
 </head>
 
@@ -34,12 +42,12 @@
 <section>
 	<h1>Point your camera towards a hill or mountain to get information about what you are viewing.</h1>
  	<div>
-      <button id="grabFrame">Grab Frame</button>
-      <button id="takePhoto">Take Photo</button>
+      <button id="grabFrame" class="hide">Grab Frame</button>
+      <button id="takePhoto" class="hide">Take Photo</button>
       <div class="select">
         <label for="videoSource">Video source: </label><select id="videoSource"></select>
       </div>
-      <input class="hidden" id="zoom" type="range" step="20">
+      <input class="hidden hide" id="zoom" type="range" step="20">
     </div>
 
     
