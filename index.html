@@ -9,9 +9,10 @@
 		left: 0px;
 		height: 100%;
 		width: 100%;
-		/* object-fit: cover; */
+		 object-fit: cover; 
 	}
 
+/*
 	video {
 	    position: absolute;
 	    min-width: 100%;
@@ -20,7 +21,7 @@
 	    left: 50%;
 	    transform: translate(-50%, -50%);        
 	}
-
+*/
 	html, body {
 		padding: 0px;
 		margin: 0px;
@@ -49,8 +50,11 @@
 <body>
 <video autoplay class="hidden"></video>
 <section>
+	<button id="orientee">Orientation</button>
 	<h1>Point your camera towards a hill or mountain to get information about what you are viewing.</h1>
+ 	
  	<div>
+ 	  
       <button id="grabFrame" class="hide">Grab Frame</button>
       <button id="takePhoto" class="hide">Take Photo</button>
       <div class="select">
@@ -58,14 +62,73 @@
       </div>
       <input class="hidden hide" id="zoom" type="range" step="20">
     </div>
+	<pre id="data"></pre>
 
-    
+
     <img>
     <canvas class="hidden"></canvas>
 </section>
 
 <script>
 'use strict';
+
+
+var data = document.querySelector('#data');
+
+function log(message) {
+  data.innerHTML += message + '<br />' + data.innerHTML;
+}
+
+navigator.geolocation.watchPosition(logPosition);
+
+function logPosition(position) {
+  console.log(position);
+  log('latitude: ' + position.coords.latitude +
+    ', longitude: ' + position.coords.longitude);
+}
+
+
+function handleDeviceMotion(e) {
+  var x = e.acceleration.x;
+  var y = e.acceleration.y;
+  var z = e.acceleration.z;
+  log('Acceleration: ' + x + ', ' + y + ', ' + z);
+
+  var xg = e.accelerationIncludingGravity.x;
+  var yg = e.accelerationIncludingGravity.y;
+  var zg = e.accelerationIncludingGravity.z;
+  log('Acceleration including gravity: ' + xg + ', ' + yg + ', ' + zg);
+
+  var alpha = e.rotationRate.alpha;
+  var beta = e.rotationRate.beta;
+  var gamma = e.rotationRate.gamma;
+  log('Rotation rate: ' + alpha + ', ' + beta + ', ' + gamma);
+
+  log('Refresh interval: ' + e.interval);
+}
+
+if (window.DeviceMotionEvent) {
+  window.ondevicemotion = handleDeviceMotion;
+} else {
+  log('Device Motion not supported.');
+}
+
+
+var logoElement = document.getElementById('orientee');
+
+function handleDeviceOrientation(e) {
+  var transform = 'rotate(' + e.gamma + 'deg) rotate3d(1, 0, 0, ' +
+      e.beta + 'deg)';
+  logoElement.style.webkitTransform = transform;
+  logoElement.style.transform = transform;
+}
+
+if (window.DeviceOrientationEvent) {
+  window.ondeviceorientation = handleDeviceOrientation;
+} else {
+  document.querySelector('p#isAvailable').innerHTML =
+      'Device Orientation is not available.';
+}
 
 /* globals ImageCapture */
 
