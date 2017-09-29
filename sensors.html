@@ -98,17 +98,17 @@ function handleDeviceMotion(e) {
   var x = e.acceleration.x;
   var y = e.acceleration.y;
   var z = e.acceleration.z;
-  log('Acceleration: ' + x + ', ' + y + ', ' + z, "dataAcceleration");
+  log('Acceleration: ' + x.toFixed(2) + ', ' + y.toFixed(2) + ', ' + z.toFixed(2), "dataAcceleration");
 
   var xg = e.accelerationIncludingGravity.x;
   var yg = e.accelerationIncludingGravity.y;
   var zg = e.accelerationIncludingGravity.z;
-  log('Acceleration including gravity: ' + xg + ', ' + yg + ', ' + zg, "dataAG");
+  log('Acceleration including gravity: ' + xg.toFixed(2) + ', ' + yg.toFixed(2) + ', ' + zg.toFixed(2), "dataAG");
 
   var alpha = e.rotationRate.alpha;
   var beta = e.rotationRate.beta;
   var gamma = e.rotationRate.gamma;
-  log('Rotation rate: ' + alpha + ', ' + beta + ', ' + gamma, "dataRR");
+  log('Rotation rate: ' + alpha.toFixed(2) + ', ' + beta.toFixed(2) + ', ' + gamma.toFixed(2), "dataRR");
 
   log('Refresh interval: ' + e.interval, "dataRI");
 }
