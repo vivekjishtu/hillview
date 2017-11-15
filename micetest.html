@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Mice Test</title>
+<script></script>
+</head>
+<body>
+<div>
+ <div>Point X: <span id="pointx"></span></div>
+ <div>Point Y: <span id="pointy"></span></div>
+</div>
+<script>
+var pointx = 320;
+var pointy = 200;
+var spanPointX = document.getElementById("pointx");
+var spanPointY = document.getElementById("pointy");
+
+function setXY(x, y) {
+   pointx += x;
+   pointy += y;
+   
+   if(pointx < 0) pointx = 0;
+   if(pointy < 0) pointy = 0;
+   
+   
+   if(pointx > 720) pointx = 720;
+   if(pointy > 1020) pointy = 1020;
+   
+   spanPointX.innerHTML = pointx;
+   spanPointY.innerHTML = pointy;
+}
+
+//Setting it initially
+setXY(0,0);
+
+
+function handleDeviceMotion(e) {
+  var x = e.acceleration.x;
+  var y = e.acceleration.y;
+  var z = e.acceleration.z;
+  //log('Acceleration: ' + x.toFixed(2) + '<br/> ' + y.toFixed(2) + '<br/> ' + z.toFixed(2), "dataAcceleration");
+  setXY(parseInt(x*-1), parseInt((y-1)*-1));
+  
+  var xg = e.accelerationIncludingGravity.x;
+  var yg = e.accelerationIncludingGravity.y;
+  var zg = e.accelerationIncludingGravity.z;
+  
+  //log('Acceleration including gravity: ' + xg.toFixed(2) + ', ' + yg.toFixed(2) + ', ' + zg.toFixed(2), "dataAG");
+  var alpha = e.rotationRate.alpha;
+  var beta = e.rotationRate.beta;
+  var gamma = e.rotationRate.gamma;
+  
+  //log('Rotation rate: ' + alpha.toFixed(2) + '<br/> ' + beta.toFixed(2) + '<br/>' + gamma.toFixed(2), "dataRR");
+  //log('Refresh interval: ' + e.interval, "dataRI");
+}
+if (window.DeviceMotionEvent) {
+  window.ondevicemotion = handleDeviceMotion;
+} else {
+  log('Device Motion not supported.');
+}
+
+</script>
+</body>
+</html>
+
