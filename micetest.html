@@ -38,12 +38,14 @@ function handleDeviceMotion(e) {
   var y = e.acceleration.y;
   var z = e.acceleration.z;
   //log('Acceleration: ' + x.toFixed(2) + '<br/> ' + y.toFixed(2) + '<br/> ' + z.toFixed(2), "dataAcceleration");
-  setXY(parseInt(x*-1), parseInt((y-1)*-1));
+  
   
   var xg = e.accelerationIncludingGravity.x;
   var yg = e.accelerationIncludingGravity.y;
   var zg = e.accelerationIncludingGravity.z;
-  
+ 
+  setXY(parseInt(xg*-1), parseInt((yg-1)*-1));
+ 
   //log('Acceleration including gravity: ' + xg.toFixed(2) + ', ' + yg.toFixed(2) + ', ' + zg.toFixed(2), "dataAG");
   var alpha = e.rotationRate.alpha;
   var beta = e.rotationRate.beta;
